@@ -1,0 +1,210 @@
+<mat-toolbar class="header">
+    <span (click)="drawer.toggle()"><img src="assets/images/logo.jpg" alt="" srcset="" class="width-180 height-160 margin-top-15"></span>
+    <span class="spacer"></span>
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="example-icon">
+        <mat-icon>account_circle</mat-icon> 
+    </button>{{sessionStorage.getItem("name") != 'undefined' ? sessionStorage.getItem("name") : ''}}
+    <mat-menu #menu="matMenu" class="mat-menu">
+        <button mat-menu-item (click)="alertChangePw()"><mat-icon class="matMenuIcon">lock</mat-icon>Change Password</button>
+        <button mat-menu-item (click)="logout()"><mat-icon class="matMenuIcon">exit_to_app</mat-icon>Logout</button>
+    </mat-menu>
+</mat-toolbar>
+<mat-drawer-container class="body" autosize>
+    <mat-drawer #drawer class="sidenav" mode="side" opened>
+
+        <mat-accordion>
+
+            <div class="expansion-topic" routerLink="dashboard" (click)="activeMenu = 1">
+                <div>
+                    <div class="center">
+                        <mat-icon class="matMenuIcon" [ngClass]="{'active': activeMenu == 1}">widgets</mat-icon>
+                    </div>
+                    <div class="menu-div" [ngClass]="{'active': activeMenu == 1}">
+                        Dashboard
+                    </div>
+                </div>
+            </div>
+
+            <mat-divider class="mat-divider-1"></mat-divider>
+
+            <mat-expansion-panel class="mat-elevation-z0 margin-top-5" hideToggle (click)="activeMenu = 6">
+                <mat-expansion-panel-header>
+                    <div class="center" style="width: 100%;">
+                        <div>
+                            <div class="row center">
+                                <mat-icon class="matMenuIcon" [ngClass]="{'active': activeMenu == 6}">perm_data_setting</mat-icon>
+                            </div>
+                            <div class="row menu-div" [ngClass]="{'active': activeMenu == 6}">
+                                User Management
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel-header>
+                <mat-divider class="mat-divider-2"></mat-divider>
+                <button class="matMenuItem" mat-button routerLink="permission" *ngIf="menuList.includes('Permission')">
+                    Permission
+                </button>
+                <button class="matMenuItem" mat-button routerLink="role" *ngIf="menuList.includes('Role')">
+                    Role
+                </button>
+                <button class="matMenuItem" mat-button routerLink="menu" *ngIf="menuList.includes('Menu')">
+                    Menu
+               </button>
+                <button class="matMenuItem" mat-button routerLink="user" *ngIf="menuList.includes('User')">
+                    User
+                </button>
+                <!-- <button class="matMenuItem" mat-button routerLink="menu" *ngIf="menuList.includes('Menu')">
+                    Menu
+               </button>
+                <button class="matMenuItem" mat-button routerLink="role" *ngIf="menuList.includes('Role')">
+                    Role
+                </button>
+                <button class="matMenuItem" mat-button routerLink="user" *ngIf="menuList.includes('User')">
+                    User
+                </button> -->
+            </mat-expansion-panel>
+
+            <mat-divider class="mat-divider-1"></mat-divider>
+
+            <mat-expansion-panel class="mat-elevation-z0 margin-top-5" hideToggle (click)="activeMenu = 7">
+                <mat-expansion-panel-header>
+                    <div class="center" style="width: 100%;">
+                        <div>
+                            <div class="row center">
+                                <mat-icon class="matMenuIcon" [ngClass]="{'active': activeMenu == 7}">settings_system_daydream</mat-icon>
+                            </div>
+                            <div class="row menu-div" [ngClass]="{'active': activeMenu == 7}">
+                                Home Page Config
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel-header>
+                <mat-divider class="mat-divider-2"></mat-divider>
+                <button class="matMenuItem" mat-button routerLink="section" *ngIf="menuList.includes('Section')">
+                     Section
+                </button>
+                <button class="matMenuItem" mat-button routerLink="slider" *ngIf="menuList.includes('Slider')">
+                    Slider
+               </button>
+            </mat-expansion-panel>
+
+            <mat-divider class="mat-divider-1"></mat-divider>
+
+            <mat-expansion-panel class="mat-elevation-z0 margin-top-5" hideToggle (click)="activeMenu = 8">
+                <mat-expansion-panel-header>
+                    <div class="center" style="width: 100%;">
+                        <div>
+                            <div class="row center">
+                                <mat-icon class="matMenuIcon" [ngClass]="{'active': activeMenu == 8}">category</mat-icon>
+                            </div>
+                            <div class="row menu-div" [ngClass]="{'active': activeMenu == 8}">
+                                Product Management
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel-header>
+                <mat-divider class="mat-divider-2"></mat-divider>
+                <button class="matMenuItem" mat-button routerLink="filter" *ngIf="menuList.includes('Filter')">
+                    Filter
+               </button>
+                <button class="matMenuItem" mat-button routerLink="category" *ngIf="menuList.includes('Category')">
+                    Category
+                </button>
+                <button class="matMenuItem" mat-button routerLink="brand" *ngIf="menuList.includes('Brand')">
+                    Brand
+               </button>
+                <button class="matMenuItem" mat-button routerLink="product" *ngIf="menuList.includes('Product')">
+                    Product
+                </button>
+
+                <button class="matMenuItem" mat-button routerLink="approve-reviews" *ngIf="menuList.includes('Reviews  Approval')">
+                   Reviews  Approval
+                </button>
+            </mat-expansion-panel>
+
+            <mat-divider class="mat-divider-1"></mat-divider>
+
+            <mat-expansion-panel class="mat-elevation-z0 margin-top-5" hideToggle (click)="activeMenu = 9">
+                <mat-expansion-panel-header>
+                    <div class="center" style="width: 100%;">
+                        <div>
+                            <div class="row center">
+                                <mat-icon class="matMenuIcon" [ngClass]="{'active': activeMenu == 9}">settings</mat-icon>
+                            </div>
+                            <div class="row menu-div" [ngClass]="{'active': activeMenu == 9}">
+                                Settings
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel-header>
+                <mat-divider class="mat-divider-2"></mat-divider>
+                <button class="matMenuItem" mat-button routerLink="sms-config" *ngIf="menuList.includes('SMS Configurations')">
+                     SMS Configurations
+                </button>
+                <button class="matMenuItem" mat-button routerLink="promotion" *ngIf="menuList.includes('Promotions')">
+                    Promotions
+               </button>
+            </mat-expansion-panel>
+
+            <mat-divider class="mat-divider-1"></mat-divider>
+
+            <mat-expansion-panel class="mat-elevation-z0 margin-top-5" hideToggle (click)="activeMenu = 10">
+                <mat-expansion-panel-header>
+                    <div class="center" style="width: 100%;">
+                        <div>
+                            <div class="row center">
+                                <mat-icon class="matMenuIcon" [ngClass]="{'active': activeMenu == 10}">settings</mat-icon>
+                            </div>
+                            <div class="row menu-div" [ngClass]="{'active': activeMenu == 10}">
+                                Order Details
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel-header>
+                <mat-divider class="mat-divider-2"></mat-divider>
+                <button class="matMenuItem" mat-button routerLink="orders" *ngIf="menuList.includes('Orders')">
+                    Orders
+                 </button>
+                <button class="matMenuItem" mat-button routerLink="view-orders" *ngIf="menuList.includes('View Orders')">
+                    View Orders
+                 </button>
+            </mat-expansion-panel>
+
+            <mat-divider class="mat-divider-1"></mat-divider>
+
+            <mat-expansion-panel class="mat-elevation-z0 margin-top-5" hideToggle (click)="activeMenu = 11">
+                <mat-expansion-panel-header>
+                    <div class="center" style="width: 100%;">
+                        <div>
+                            <div class="row center">
+                                <mat-icon class="matMenuIcon" [ngClass]="{'active': activeMenu == 12}">settings</mat-icon>
+                            </div>
+                            <div class="row menu-div" [ngClass]="{'active': activeMenu == 12}">
+                                Reports
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel-header>
+                <mat-divider class="mat-divider-2"></mat-divider>
+                <button class="matMenuItem" mat-button routerLink="order-report" *ngIf="menuList.includes('Order Report')">
+                    Order Report
+                 </button>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+    </mat-drawer>
+    <div class="sidenav-content">
+        <router-outlet></router-outlet>
+    </div>
+
+</mat-drawer-container>
+
+
+<div class="footer">
+    <div>
+        <div class="center">Marlbo Trading Company</div>
+        <div class="footer-child center">Some introduction</div>
+        <br>
+        <div class="footer-child-3 center">Developed By Code Diary Solutions</div>
+    </div>
+</div>

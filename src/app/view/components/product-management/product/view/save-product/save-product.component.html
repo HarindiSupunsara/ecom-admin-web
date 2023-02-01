@@ -1,0 +1,314 @@
+<div [hidden]="!loading" class="loader">
+    <h5>Loading...</h5>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+<div class="content-container" [ngClass]="{'disabled': loading == true}">
+    <mat-card class="main-card width-97">
+        <mat-card-header>
+            <mat-card-title>PRODUCT</mat-card-title>
+            <mat-card-subtitle>{{screenName}}</mat-card-subtitle>
+            <span class="spacer"></span>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-stepper>
+                <mat-step label="Step 1" state="phone">
+                    <form [formGroup]="productFormGroup">
+                        <ng-template matStepLabel>Basic Details</ng-template>
+
+                        <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                            <div fxFlex="50" class="padding-right-5">
+                                <mat-form-field class="full-width">
+                                    <input type="input" matInput formControlName="name" placeholder="Name">
+                                    <mat-error *ngIf="Name?.touched && Name?.invalid && Name?.errors?.['required']">
+                                        Name is
+                                        <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex="50">
+                                <mat-form-field class="full-width">
+                                    <input type="number" matInput formControlName="displayOrder" placeholder="Display Order">
+                                    <mat-error *ngIf="DisplayOrder?.touched && DisplayOrder?.invalid && DisplayOrder?.errors?.['required']">
+                                        DisplayOrder is
+                                        <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                            <div fxFlex="50" class="padding-right-5">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Description</mat-label>
+                                    <textarea matInput formControlName="description" style="height: 10px;" maxlength="1000"></textarea>
+                                    <mat-hint align="end">{{Description?.value.length}} / 1000</mat-hint>
+                                    <mat-error *ngIf="Description?.touched && Description?.invalid && Description?.errors?.['required']">
+                                        Description is
+                                        <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex="25" class="padding-right-5">
+                                <mat-form-field class="full-width">
+                                    <input type="number" matInput formControlName="qoh" placeholder="Quantity On Hand">
+                                    <mat-error *ngIf="Qoh?.touched && Qoh?.invalid && Qoh?.errors?.['required']">
+                                        Qoh is
+                                        <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex="25">
+                                <mat-form-field class="full-width">
+                                    <input type="number" matInput formControlName="price" placeholder="Price">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                            <div fxFlex="50" class="padding-right-5">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Discount Type</mat-label>
+                                    <mat-select formControlName="distype">
+                                        <mat-option value="FLAT">FLAT</mat-option>
+                                        <mat-option value="PERCENTAGE">PERCENTAGE</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="DiscountType?.touched && DiscountType?.invalid && DiscountType?.errors?.['required']">
+                                        Type is
+                                        <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex="25">
+                                <mat-form-field class="full-width">
+                                    <input type="number" matInput formControlName="value" placeholder="Value">
+                                    <mat-error *ngIf="Value?.touched && Value?.invalid && Value?.errors?.['required']">
+                                        Value is
+                                        <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex="25" class="padding-right-5">
+                                <mat-checkbox formControlName="activeDiscount"> Enable Discount </mat-checkbox>
+                            </div>
+                        </div>
+
+                        <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                            <div fxFlex="50" class="padding-right-5">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Brand</mat-label>
+                                    <mat-select formControlName="brand">
+                                        <mat-option *ngFor="let pm of brandList" [value]="pm.id">{{pm.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div fxFlex="50">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Category</mat-label>
+                                    <mat-select formControlName="category" multiple>
+                                        <mat-option *ngFor="let pm of categoryList" [value]="pm.id" (onSelectionChange)="selectCategory(pm)">{{pm.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                            <div fxFlex="50" class="padding-right-5">
+                                <mat-checkbox formControlName="show"> Show Price </mat-checkbox>
+                            </div>
+                            <div fxFlex="50" class="padding-right-5">
+                                <mat-form-field class="full-width">
+                                    <input matInput formControlName="catalogueLink" placeholder="Catalogue Link">
+                                </mat-form-field>
+                                <a href="{{CatalogueLink?.value}}" target="_blank"> View Link</a>
+                            </div>
+                        </div>
+                        <!-- <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                            <div fxFlex="50">
+                                <mat-label>Product Catalogue</mat-label> &nbsp;
+                                <input type="file" accept="image/pdf" (change)="selectPdfFile($event)">
+                            </div>
+                        </div> -->
+
+                    </form>
+                    <div class="margin-top-10">
+                        <button mat-raised-button class="btn-trans float-right" matStepperNext matTooltip="Next">Next</button>
+                    </div>
+                </mat-step>
+                <mat-step label="Step 2" state="chat">
+                    <form [formGroup]="filtersFormGroup">
+                        <ng-template matStepLabel>Product Meta Data</ng-template>
+
+                        <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right" class="margin-top-10">
+                            <div fxFlex="50" class="padding-right-5">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Filter</mat-label>
+                                    <input type="text" placeholder="Select Filter" matInput formControlName="filters" [matAutocomplete]="auto">
+                                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                        <mat-option *ngFor="let option of filteredFilters | async" [value]="option.name">
+                                            {{option.name}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </div>
+
+                            <div fxFlex="50">
+                                <mat-form-field class="full-width">
+                                    <input matInput formControlName="filterValue" placeholder="Filter Value">
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+
+                        <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                            <div fxFlex="75" class="padding-right-5">
+                                <mat-form-field class="full-width">
+                                    <input matInput formControlName="dataString" placeholder="Data">
+                                </mat-form-field>
+                            </div>
+
+                            <div fxFlex="25">
+                                <button mat-raised-button class="float-right" color="accent" matTooltip="Add To Table" (click)="addToTable()"><mat-icon>add</mat-icon></button>
+                            </div>
+
+                        </div>
+
+                        <mat-divider></mat-divider>
+
+                        <div style="width: 100%;max-height: 150px;overflow: auto;margin-top: 10px;">
+                            <table mat-table [dataSource]="filterList" id="table" *ngIf="filterList.length > 0">
+
+                                <ng-container matColumnDef="name">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Filter </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.filter}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="data">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Data </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.filter == null || row.filter == undefined || row.filter == 0 ? row.dataStr : row.dataDece != undefined ? row.dataDece : row.dataInt != undefined ? row.dataInt: ''}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="status">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        <mat-slide-toggle [checked]="row.status == 1" (change)="changeFilterStatus(row,$event)">
+                                        </mat-slide-toggle>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="edit">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Edit </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        <mat-icon aria-hidden="false" matTooltip="Edit" class="cursor-pointer" (click)="editFilter(row)">edit</mat-icon>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                                <tr class="mat-row" *matNoDataRow>
+                                    <td class="mat-cell" colspan="4">No data matching the filter</td>
+                                </tr>
+                            </table>
+                        </div>
+
+
+                    </form>
+                    <div class="margin-top-20">
+                        <button mat-raised-button class="btn-trans float-right" matStepperNext matTooltip="Next">Next</button>
+                        <button mat-raised-button class="btn-trans float-left" matStepperPrevious matTooltip="Back">Back</button>
+                    </div>
+                </mat-step>
+
+                <mat-step label="Step 3" state="chat">
+                    <form [formGroup]="imageFormGroup">
+                        <ng-template matStepLabel>Images</ng-template>
+
+                        <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right" class="margin-top-10">
+                            <div fxFlex="50" class="padding-right-5">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Type</mat-label>
+                                    <mat-select formControlName="type" name="type">
+                                        <mat-option value="MAIN">
+                                            MAIN
+                                        </mat-option>
+                                        <mat-option value="OTHER">
+                                            OTHER
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="Type?.touched && Type?.invalid && Type?.errors?.['required']">
+                                        Type is
+                                        <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex="50">
+                                <mat-form-field class="full-width">
+                                    <input type="number" matInput formControlName="displayOrder" placeholder="Display Order">
+                                    <mat-error *ngIf="ImageDisOrder?.touched && ImageDisOrder?.invalid && ImageDisOrder?.errors?.['required']">
+                                        DisplayOrder is
+                                        <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+
+                        <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right" class="margin-bottom-10">
+
+                            <div fxFlex="50" class="padding-right-5">
+                                <mat-label>Image</mat-label> &nbsp;
+                                <input type="file" accept="image/png" (change)="selectFile($event)"><br>
+                                <mat-hint style="color: rgb(204, 101, 101);font-weight: bold;">Image type must be (.png) and size (600 x 600)</mat-hint>
+                            </div>
+
+
+                            <div fxFlex="25">
+                                <button mat-raised-button class="float-right" color="accent" matTooltip="Add To List" (click)="addToImageList()"><mat-icon>add</mat-icon></button>
+                            </div>
+
+                        </div>
+
+                        <mat-divider></mat-divider>
+
+                        <div fxLayout="row wrap" fxLayout.sm="row  wrap" fxLayout.xs="column wrap" fxLayoutWrap fxLayoutAlign="right" style="margin-top: 20px !important;">
+                            <div fxFlex="33" class="padding-right-5" *ngFor="let i of imageList">
+                                <mat-card class="margin-bottom-10" *ngIf="i.status != 'REMOVE'">
+                                    <mat-card-header></mat-card-header>
+                                    <mat-card-content>
+                                        <img mat-card-image [src]="i.imageString | sanitizerUrl : 'resourceUrl'" style="height: 300px;width: 300px;">
+                                        <div>
+                                            <mat-label class="float-left">Display Order : {{i.order}}</mat-label>
+                                            <mat-label class="float-right">Type : {{i.type}}</mat-label>
+                                        </div>
+
+                                        <div class="center margin-top-10">
+                                            <button mat-raised-button color="accent" (click)="editImageData(i)" class="margin-10"><mat-icon>edit</mat-icon></button>
+                                            <button mat-raised-button color="warn" (click)="removeImage(i)"><mat-icon>remove</mat-icon></button>
+                                        </div>
+                                    </mat-card-content>
+
+                                </mat-card>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <div class="margin-top-20">
+                        <button mat-raised-button class="btn-primary float-right" matTooltip="Save" (click)="save()">Save</button>
+                        <button mat-raised-button class="btn-trans float-left" matStepperPrevious matTooltip="Back">Back</button>
+                    </div>
+                </mat-step>
+
+                <!-- Icon overrides. -->
+                <ng-template matStepperIcon="phone">
+                    <mat-icon>account_box</mat-icon>
+                </ng-template>
+                <ng-template matStepperIcon="chat">
+                    <mat-icon>playlist_add_check</mat-icon>
+                </ng-template>
+            </mat-stepper>
+
+        </mat-card-content>
+    </mat-card>
+</div>

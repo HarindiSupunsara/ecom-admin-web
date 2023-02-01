@@ -1,0 +1,98 @@
+<div [hidden]="!loading" class="loader">
+    <h5>Loading...</h5>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+<div class="content-container" [ngClass]="{'disabled': loading == true}">
+    <mat-card class="main-card">
+        <mat-card-header>
+            <mat-card-title>CATEGORY</mat-card-title>
+            <mat-card-subtitle>{{screenName}}</mat-card-subtitle>
+            <span class="spacer"></span>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="categoryForm">
+                <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                    <div fxFlex="50" class="padding-right-5">
+                        <mat-form-field class="full-width">
+                            <input type="input" matInput formControlName="name" placeholder="Name">
+                            <mat-error *ngIf="Name?.touched && Name?.invalid && Name?.errors?.['required']">
+                                Name is
+                                <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50">
+                        <mat-form-field class="full-width">
+                            <input type="number" matInput formControlName="displayOrder" placeholder="Display Order">
+                            <mat-error *ngIf="DisplayOrder?.touched && DisplayOrder?.invalid && DisplayOrder?.errors?.['required']">
+                                DisplayOrder is
+                                <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                    <div fxFlex="50" class="padding-right-5">
+                        <mat-form-field class="full-width">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput formControlName="description" style="height: 10px;" maxlength="1000"></textarea>
+                            <mat-hint align="end">{{Description?.value.length}} / 1000</mat-hint>
+                            <mat-error *ngIf="Description?.touched && Description?.invalid && Description?.errors?.['required']">
+                                Description is
+                                <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50">
+                        <mat-form-field class="full-width">
+                            <mat-label>Parent Menu</mat-label>
+                            <mat-select formControlName="parentCategory">
+                                <mat-option *ngFor="let pm of parentCategoryList" [value]="pm.id">{{pm.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+
+                    <div fxFlex="50" class="padding-right-5">
+                        <mat-form-field class="full-width">
+                            <mat-label>Filters</mat-label>
+                            <mat-chip-list #chipList aria-label="Filter selection">
+                                <mat-chip *ngFor="let filter of categoryFilters" (removed)="remove(filter)">
+                                    {{filter.name}}
+                                    <button matChipRemove>
+                                  <mat-icon>cancel</mat-icon>
+                                </button>
+                                </mat-chip>
+                                <input placeholder="New filter..." #filterInput formControlName="categoryFilter" [matAutocomplete]="auto" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="add($event)">
+                            </mat-chip-list>
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                                <mat-option *ngFor="let filter of filteredCategoryFilters | async" [value]="filter">
+                                    {{filter.name}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxFlex="50" class="padding-right-5">
+                        <mat-label>Cover Image</mat-label> &nbsp;
+                        <input type="file" accept="image/png" (change)="selectFile($event)"><br>
+                        <mat-hint style="color: rgb(204, 101, 101);font-weight: bold;">Image type must be (.png) and size (600 x 600)</mat-hint>
+                    </div>
+
+                </div>
+
+                <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                    <div fxFlex="100">
+                        <img [src]="imgSrc | sanitizerUrl : 'resourceUrl'" style="height: 250px;width: 500px;">
+                    </div>
+                </div>
+
+                <div class="card-footer margin-top-10">
+                    <button mat-raised-button class="btn-primary" matTooltip="Save" (click)="save()">Save</button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -1,0 +1,35 @@
+<div [hidden]="!loading" class="loader">
+    <h5>Loading...</h5>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+<div class="content-container" [ngClass]="{'disabled': loading == true}">
+    <mat-card class="main-card">
+        <mat-card-header>
+            <mat-card-title>PERMISSION</mat-card-title>
+            <mat-card-subtitle>{{screenName}}</mat-card-subtitle>
+            <span class="spacer"></span>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="permissionForm" (ngSubmit)="save()">
+                <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                    <div fxFlex="50">
+                        <mat-form-field class="full-width">
+                            <input type="input" matInput formControlName="name" placeholder="Name">
+                            <mat-error *ngIf="Name?.touched && Name?.invalid && Name?.errors?.['required']">
+                                Name is
+                                <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+
+                <div class="card-footer">
+                    <button mat-raised-button class="btn-primary" matTooltip="Save" type="submit">Save</button>
+                </div>
+            </form>
+        </mat-card-content>
+
+
+    </mat-card>
+</div>

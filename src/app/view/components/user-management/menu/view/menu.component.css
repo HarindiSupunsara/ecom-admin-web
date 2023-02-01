@@ -1,0 +1,9 @@
+:host ::ng-deep th {
+    background-color: #b6b6b6;
+    color: white;
+}
+
+:host ::ng-deep td {
+    background-color: #F2F2F2;
+    color: #5a5d5d;
+}

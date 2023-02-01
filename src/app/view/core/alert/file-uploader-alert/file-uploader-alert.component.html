@@ -1,0 +1,13 @@
+<h2 mat-dialog-title class="text-align-center">Upload New Stock</h2>
+<mat-dialog-content align="center" class="">
+
+    <div class="full-width">
+        <mat-label>Browse your file here</mat-label> &nbsp; <br>
+        <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" (change)="selectFile($event)">
+    </div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-button mat-dialog-close class="btn-primary" (click)="yesConfirmation();">Upload</button>
+    <button mat-button class="btn-trans" mat-dialog-close (click)="noConfirmation();">Cancel</button>
+</mat-dialog-actions>

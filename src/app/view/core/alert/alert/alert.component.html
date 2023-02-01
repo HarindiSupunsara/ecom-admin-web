@@ -1,0 +1,12 @@
+<h2 mat-dialog-title class="text-align-center">
+    {{modalTitle}}</h2>
+<mat-dialog-content align="center" class="dialog-box">
+    <img *ngIf="modelType == 'success'" src="assets/images/success_1.gif" class="dialog-img">
+    <img *ngIf="modelType == 'error'" src="assets/images/error_1.gif" class="dialog-img"> <br>
+    <img *ngIf="modelType == 'warning'" src="assets/images/warning.jpg" class="dialog-img"> <br> {{modelMessage}} <br> {{id}}
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button *ngIf="modelType == 'success'" class="btn-primary" mat-flat-button mat-dialog-close (click)="yesConfirmation();">Ok</button>
+    <button *ngIf="modelType == 'error'" class="btn-primary btn-error" mat-flat-button mat-dialog-close (click)="yesConfirmation();">Ok</button>
+    <button *ngIf="modelType == 'warning'" class="btn-primary btn-warn" mat-flat-button mat-dialog-close (click)="yesConfirmation();">Ok</button>
+</mat-dialog-actions>

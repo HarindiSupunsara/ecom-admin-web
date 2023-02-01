@@ -1,0 +1,39 @@
+<div class="main-div">
+
+    <mat-card class="login-card">
+
+        <mat-card-content>
+            <div class="center">
+                <img src="assets/images/logo.jpg" alt="" srcset="" class="width-130">
+            </div>
+            <div class="topic-1">
+                <h1>Sign in</h1>
+            </div>
+
+            <form [formGroup]="loginForm" (ngSubmit)="signin()">
+                <mat-form-field class="full-width">
+                    <mat-label>Username</mat-label>
+                    <input type="text" formControlName="userName" matInput>
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <mat-label>Password</mat-label>
+                    <input type="text" formControlName="password" matInput [type]="hide ? 'password' : 'text'">
+                    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </mat-form-field>
+
+
+                <div class="error-div">{{error}}</div>
+
+                <div class="height-50 margin-top-20">
+                    <button mat-button class="btn-transparent float-left" type="button">Forgot Passsword?</button>
+                    <button mat-raised-button class="btn-primary float-right" (click)="signin()" type="button">Sign in</button>
+                </div>
+            </form>
+
+        </mat-card-content>
+        <!-- <mat-card-actions>
+
+
+        </mat-card-actions> -->
+    </mat-card>
+</div>

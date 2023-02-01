@@ -1,0 +1,435 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$marlbo-admin-web-primary: mat.define-palette(mat.$indigo-palette);
+$marlbo-admin-web-accent: mat.define-palette(mat.$green-palette);
+// The warn palette is optional (defaults to red).
+$marlbo-admin-web-warn: mat.define-palette(mat.$red-palette);
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$marlbo-admin-web-theme: mat.define-light-theme(( color: ( primary: $marlbo-admin-web-primary, accent: $marlbo-admin-web-accent, warn: $marlbo-admin-web-warn, )));
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($marlbo-admin-web-theme);
+@import '~flag-icon-css/css/flag-icons.min.css';
+
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+    color: #5a5d5d;
+}
+
+body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    color: #5a5d5d;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.content-container {
+    padding: 10px;
+}
+
+.main-div {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/assets/images/background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.login-card {
+    max-width: 300px;
+    background-color: white;
+    border-radius: 14px;
+    font-size: 14px;
+    color: #5a5d5d;
+    /* box-shadow: rgba(99, 99, 99, 0.2) 10px 10px 15px 15px; */
+    box-shadow: 0 3px 6px rgb(0 0 0 / 29%) !important;
+    border-radius: 14px !important;
+    border-top: 2px solid #0073ff;
+    z-index: 2;
+}
+
+.center {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.mat-card {
+    font-family: 'Open Sans', sans-serif;
+    color: #5a5d5d;
+    z-index: 2;
+}
+
+.topic-1 {
+    text-align: center;
+    margin: 10px;
+    font-weight: 400;
+}
+
+.topic-1 h1 {
+    font-size: 20px;
+    font-family: 'Open Sans', sans-serif;
+    color: #1A5CAA;
+}
+
+.mat-form-field-label {
+    color: #5a5d5d !important;
+    font-size: 14px !important;
+}
+
+.mat-form-field-underline {
+    background-color: #5a5d5d !important;
+}
+
+.mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: #496a94 !important;
+}
+
+.main-card {
+    width: 60%;
+    height: 100%;
+    background-color: white;
+    border-radius: 14px;
+    font-size: 14px;
+    color: #5a5d5d;
+    box-shadow: 0 3px 6px rgb(0 0 0 / 29%) !important;
+    border-radius: 14px !important;
+    border-top: 2px solid #0073ff;
+    z-index: 2;
+}
+
+.sub-card {
+    width: 95%;
+    height: 100%;
+    background-color: white;
+    border-radius: 14px;
+    font-size: 14px;
+    color: #5a5d5d;
+    /* box-shadow: rgba(99, 99, 99, 0.2) 10px 10px 15px 15px; */
+    box-shadow: 0 3px 6px rgb(0 0 0 / 29%) !important;
+    border-radius: 14px !important;
+    z-index: 2;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.mat-table {
+    background-color: #F2F2F2;
+    color: #5a5d5d;
+}
+
+mat-paginator {
+    background-color: #b6b6b6;
+    color: white;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    background: #CCC;
+    background-position: center;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: right;
+    margin-bottom: 10px;
+}
+
+.main-table-scroll {
+    max-height: 400px !important;
+    overflow: auto;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.loader {
+    color: black;
+    font-size: 14px;
+}
+
+.btn-primary {
+    background-color: #0073ff;
+    color: white;
+    font-weight: 400;
+}
+
+.btn-transparent:hover {
+    color: #0073ff;
+}
+
+.btn-primary:hover {
+    background-color: transparent;
+    color: #0073ff;
+    font-weight: 400;
+    border: 0.1px solid #0073ff;
+}
+
+
+/* .btn-trans {
+    background-color: transparent;
+    color: #0f9d55;
+    font-weight: 400;
+    border: 0.1px solid #464444;
+} */
+
+.btn-trans:hover {
+    background-color: transparent;
+    color: #5a5d5d;
+    font-weight: 400;
+    border: 0.1px solid #5a5d5d;
+}
+
+.btn-search {
+    margin-right: 5px !important;
+    color: white !important;
+    background-color: #1A5CAA !important;
+}
+
+.float-right {
+    float: right !important;
+}
+
+.float-left {
+    float: left !important;
+}
+
+.error-div {
+    color: red;
+    font-size: 12px;
+    font-weight: 400;
+    font-family: sans-serif;
+}
+
+.width-130 {
+    width: 130px;
+}
+
+.width-180 {
+    width: 180px;
+}
+
+.height-50 {
+    height: 50px;
+}
+
+.height-40 {
+    height: 40px;
+}
+
+.padding-5 {
+    padding: 5px !important;
+}
+
+.padding-10 {
+    padding: 10px !important;
+}
+
+.padding-15 {
+    padding: 15px !important;
+}
+
+.margin-5 {
+    margin: 5px !important;
+}
+
+.margin-10 {
+    margin: 10px !important;
+}
+
+.padding-right-5 {
+    padding-right: 5px !important;
+}
+
+.padding-top-5 {
+    padding-top: 5px !important;
+}
+
+.padding-bottom-5 {
+    padding-bottom: 5px !important;
+}
+
+.margin-top-5 {
+    margin-top: 5px !important;
+}
+
+.margin-right-15 {
+    margin-right: 15px !important;
+}
+
+.margin-right-20 {
+    margin-right: 20px !important;
+}
+
+.margin-right--15 {
+    margin-right: -15px !important;
+}
+
+.margin-bottom--20 {
+    margin-bottom: -20px !important;
+}
+
+.margin-bottom-10 {
+    margin-bottom: 10px !important;
+}
+
+.margin-bottom-5 {
+    margin-bottom: 5px !important;
+}
+
+.margin-top-20 {
+    margin-top: 20px !important;
+}
+
+.margin-top-15 {
+    margin-top: 15px !important;
+}
+
+.margin-top-10 {
+    margin-top: 10px !important;
+}
+
+.mat-paginator {
+    background-color: #b6b6b6;
+    color: white;
+}
+
+.mat-card-title,
+.mat-card-subtitle {
+    margin-left: -15px !important;
+    color: #5a5d5d;
+}
+
+::ng-deep .mat-fab:not([class*=mat-elevation-z]),
+.mat-mini-fab:not([class*=mat-elevation-z]) {
+    box-shadow: none;
+    /* box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 6px 10px 0px rgba(0, 0, 0, 0.14),0px 1px 18px 0px rgba(0, 0, 0, 0.12); */
+}
+
+::ng-deep .mat-expansion-indicator,
+.mat-expansion-indicator:after {
+    color: green;
+}
+
+:host ::ng-deep mat-paginator {
+    background-color: #b6b6b6;
+    color: white;
+}
+
+:host ::ng-deep mat-card-title,
+:host ::ng-deep mat-card-subtitle {
+    margin-left: -15px !important;
+    color: #5a5d5d;
+}
+
+:host ::ng-deep mat-accordion,
+:host ::ng-deep mat-expansion-panel,
+:host ::ng-deep mat-expansion-panel-header,
+:host ::ng-deep mat-panel-title,
+:host ::ng-deep mat-panel-description {
+    background-color: #F2F2F2 !important;
+    color: #5a5d5d !important;
+    font-weight: 400;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.cursor-pointer {
+    cursor: pointer !important;
+}
+
+.end {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.text-align-center {
+    text-align: center !important;
+}
+
+.text-align-right {
+    text-align: right !important;
+}
+
+.color-white {
+    background-color: white;
+}
+
+.remove-icon {
+    cursor: pointer;
+    color: rgb(161, 16, 16);
+}
+
+.success-icon {
+    cursor: pointer;
+    color: #0f9d55;
+}
+
+.reject-chip {
+    cursor: pointer;
+    background-color: rgb(161, 16, 16);
+}
+
+.approve-chip {
+    cursor: pointer;
+    background-color: #0f9d55;
+}
+
+.width-97 {
+    width: 97% !important;
+}
+
+.align-right-bottom {
+    position: absolute;
+    top: 65%;
+    bottom: 0;
+    left: 0;
+    right: 5px;
+}
+
+.color-black {
+    color: black !important;
+}
+
+.padding-left-0 {
+    padding-left: 0px;
+}
+
+.padding-left-5 {
+    padding-left: 5px;
+}
+
+
+/* Importing Bootstrap SCSS file. */
+
+@import "~bootstrap/scss/bootstrap";
+
+/* Importing Datepicker SCSS file. */
+
+@import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";

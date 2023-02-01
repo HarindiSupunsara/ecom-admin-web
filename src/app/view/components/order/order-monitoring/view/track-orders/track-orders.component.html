@@ -1,0 +1,255 @@
+<div [hidden]="!loading" class="loader">
+    <h5>Loading...</h5>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+<div class="content-container" [ngClass]="{'disabled': loading == true}">
+    <mat-card class="main-card width-97">
+        <mat-card-header>
+            <mat-card-title>TRACK ORDER</mat-card-title>
+            <mat-card-subtitle></mat-card-subtitle>
+            <span class="spacer"></span>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-tab-group mat-align-tabs="start">
+                <mat-tab label="Order Info">
+                    <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                        <div fxFlex="33.33" class="padding-right-5">
+
+                            <h3 style="margin: 5px;color: black;">
+                                <mat-icon>shopping_basket</mat-icon> &nbsp;Order Info</h3>
+                            <table class="full-width">
+                                <tr>
+                                    <td>Order Id</td>
+                                    <td>: {{editOrder?.order_id}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Order Date</td>
+                                    <td>: {{editOrder?.order_date | date:'yyyy-MM-dd'}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Order Stage</td>
+                                    <td>: {{editOrder?.orderStage}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Sub Total</td>
+                                    <td>: {{editOrder?.subTotal | number:'.2'}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Total</td>
+                                    <td>: {{editOrder?.totalAmount | number:'.2'}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Promotion Code</td>
+                                    <td>: {{editOrder?.promotionResponseDto?.promoCode}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Promotion Name</td>
+                                    <td>: {{editOrder?.promotionResponseDto?.name}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Promotion Type</td>
+                                    <td>: {{editOrder?.promotionResponseDto?.type}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Promotion Value</td>
+                                    <td>: {{editOrder.promotionResponseDto?.value}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div fxFlex="33.33" class="padding-right-5">
+
+                            <h3 style="margin: 5px;color: black;">
+                                <mat-icon>assignment_ind</mat-icon> &nbsp;Customer Info</h3>
+                            <table class="full-width">
+                                <tr>
+                                    <td>Name</td>
+                                    <td>: {{editOrder.customerResponseDto!.name}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Mobile</td>
+                                    <td>: {{editOrder.customerResponseDto!.mobile}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>: {{editOrder.customerResponseDto!.email}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Payment Type</td>
+                                    <td>: {{editOrder.paymentType}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Payment Status</td>
+                                    <td>: {{editOrder.paymentStatus}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div fxFlex="33.34">
+
+                            <h3 style="margin: 5px;color: black;">
+                                <mat-icon> directions_car</mat-icon> &nbsp;Deliver to</h3>
+                            <table class="full-width">
+                                <tr>
+                                    <td>Name</td>
+                                    <td>: {{editOrder.sfirstName}} {{editOrder.slastName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Company Name</td>
+                                    <td>: {{editOrder.scompanyName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Address</td>
+                                    <td>: {{editOrder.saddress}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Street Name</td>
+                                    <td>: {{editOrder.sstreetName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>City</td>
+                                    <td>: {{editOrder.scity}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Postal Code</td>
+                                    <td>: {{editOrder.spostalCode}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Mobile</td>
+                                    <td>: {{editOrder.smobile}} / {{editOrder.sphone}} </td>
+                                </tr>
+                                <tr>
+                                    <td>Delivery Type</td>
+                                    <td>: {{editOrder.deliveryType}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Special Note</td>
+                                    <td>: {{editOrder.specialNote}}</td>
+                                </tr>
+                            </table>
+
+
+                            <h3 style="margin: 5px;color: black;">
+                                <mat-icon> directions_car</mat-icon> &nbsp;Billing Address</h3>
+                            <table class="full-width">
+                                <tr>
+                                    <td>Name</td>
+                                    <td>: {{editOrder.firstName}} {{editOrder.lastName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Company Name</td>
+                                    <td>: {{editOrder.companyName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Address</td>
+                                    <td>: {{editOrder.address}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Street Name</td>
+                                    <td>: {{editOrder.streetName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>City</td>
+                                    <td>: {{editOrder.city}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Postal Code</td>
+                                    <td>: {{editOrder.postalCode}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Mobile</td>
+                                    <td>: {{editOrder.mobile}} / {{editOrder.phone}} </td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>: {{editOrder.email}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                        <div fxFlex="100" class="padding-right-5 margin-top-10">
+                            <h3 style="margin: 5px;color: black;">
+                                <mat-icon>assignment_ind</mat-icon> &nbsp;Order Details</h3>
+                            <table mat-table [dataSource]="editOrder.orderProductRequestDtos" class="full-width" style="max-height: 50px;overflow: auto;">
+                                <ng-container matColumnDef="name">
+                                    <th mat-header-cell *matHeaderCellDef> Product Name </th>
+                                    <td mat-cell *matCellDef="let element "> {{element.name}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="price">
+                                    <th mat-header-cell *matHeaderCellDef> Price </th>
+                                    <td mat-cell *matCellDef="let element "> {{element.price | number:'.2'}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="count">
+                                    <th mat-header-cell *matHeaderCellDef> Qty </th>
+                                    <td mat-cell *matCellDef="let element "> {{element.count}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="total">
+                                    <th mat-header-cell *matHeaderCellDef> Sub Total </th>
+                                    <td mat-cell *matCellDef="let element "> {{element.total | number:'.2'}} </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns; "></tr>
+                            </table>
+
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Order Stages">
+                    <mat-stepper orientation="vertical">
+                        <mat-step *ngFor="let o of editOrder?.orderTrackingDetailsDtos">
+                            <ng-template matStepLabel>{{o?.orderStatus}} | ({{o?.createDate | date:'yyyy-MM-dd'}})</ng-template>
+                            <ng-template matStepContent>
+                                <p>Tracking ID : {{o?.trackingId}}</p>
+                            </ng-template>
+                        </mat-step>
+                        <!-- <mat-step>
+                            <ng-template matStepLabel>Step 2</ng-template>
+                            <ng-template matStepContent>
+                                <p>This content was also rendered lazily</p>
+                                <button mat-button matStepperPrevious>Back</button>
+                                <button mat-button matStepperNext>Next</button>
+                            </ng-template>
+                        </mat-step>
+                        <mat-step>
+                            <ng-template matStepLabel>Step 3</ng-template>
+                            <p>This content was rendered eagerly</p>
+                            <button mat-button matStepperPrevious>Back</button>
+                        </mat-step> -->
+                    </mat-stepper>
+
+
+                    <!-- <form>
+                        <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                            <div fxFlex="50" class="padding-right-5">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Change Order Stage</mat-label>
+                                    <mat-select [formControl]="orderStage">
+                                        <mat-option value="Pending">Pending</mat-option>
+                                        <mat-option value="Confirmed">Confirmed</mat-option>
+                                        <mat-option value="Packaging">Packaging</mat-option>
+                                        <mat-option value="Shipping">Shipping</mat-option>
+                                        <mat-option value="Deliverd">Deliverd</mat-option>
+                                        <mat-option value="Cancel">Cancel</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex="50" class="padding-right-5">
+                                <button mat-raised-button class="btn-primary float-right" matTooltip="Save" (click)="changeOrderStage()">Save</button>
+                            </div>
+                        </div>
+                    </form> -->
+
+                </mat-tab>
+            </mat-tab-group>
+
+        </mat-card-content>
+    </mat-card>
+</div>

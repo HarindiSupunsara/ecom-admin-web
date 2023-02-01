@@ -1,0 +1,81 @@
+<div [hidden]="!loading" class="loader">
+    <h5>Loading...</h5>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+<div class="content-container" [ngClass]="{'disabled': loading == true}">
+    <mat-card class="main-card width-97">
+        <mat-card-header>
+            <mat-card-title>Promotion</mat-card-title>
+            <mat-card-subtitle>{{screenName}}</mat-card-subtitle>
+            <span class="spacer"></span>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="promotionForm">
+                <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                    <div fxFlex="50" class="padding-right-5">
+                        <mat-form-field class="full-width">
+                            <input type="input" matInput formControlName="name" placeholder="Name">
+                            <mat-error *ngIf="Name?.touched && Name?.invalid && Name?.errors?.['required']">
+                                Name is
+                                <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50">
+                        <mat-form-field class="full-width">
+                            <input type="input" matInput formControlName="promoCode" placeholder="Promo Code">
+                            <mat-error *ngIf="PromoCode?.touched && PromoCode?.invalid && PromoCode?.errors?.['required']">
+                                Promo Code is
+                                <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                    <div fxFlex="50" class="padding-right-5">
+                        <mat-form-field class="full-width">
+                            <mat-label>Promotion Type</mat-label>
+                            <mat-select formControlName="type">
+                                <mat-option value="FLAT">FLAT</mat-option>
+                                <mat-option value="PERCENTAGE">PERCENTAGE</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="Type?.touched && Type?.invalid && Type?.errors?.['required']">
+                                Type is
+                                <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50">
+                        <mat-form-field class="full-width">
+                            <input type="number" matInput formControlName="value" placeholder="Value">
+                            <mat-error *ngIf="Value?.touched && Value?.invalid && Value?.errors?.['required']">
+                                Value is
+                                <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                    <div fxFlex="50">
+                        <mat-form-field class="full-width">
+                            <mat-label>Enter a valid date range</mat-label>
+                            <mat-date-range-input [rangePicker]="picker">
+                                <input matStartDate placeholder="Start date" formControlName="startDate">
+                                <input matEndDate placeholder="End date" formControlName="endDate">
+                            </mat-date-range-input>
+                            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #picker></mat-date-range-picker>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="card-footer margin-top-10">
+                    <button mat-raised-button class="btn-primary" matTooltip="Save" (click)="save()">Save</button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

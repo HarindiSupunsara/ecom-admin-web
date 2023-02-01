@@ -1,0 +1,195 @@
+<div [hidden]="!loading" class="loader">
+    <h5>Loading...</h5>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+
+<div class="content-container" [ngClass]="{'disabled': loading == true}">
+    <mat-card class="main-card width-97">
+        <mat-card-header>
+            <mat-card-title>ORDERS</mat-card-title>
+            <mat-card-subtitle>All Order</mat-card-subtitle>
+            <span class="spacer"></span>
+            <button class="btn-search" mat-mini-fab matTooltip="Search" (click)="search()">
+                <mat-icon>search</mat-icon>
+              </button>
+
+        </mat-card-header>
+        <mat-card-content>
+            <div [hidden]="showSearch">
+                <mat-form-field appearance="standard">
+                    <mat-label>Search</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                <div fxFlex="50">
+                    <mat-form-field class="full-width">
+                        <mat-label>Enter Report Date Period</mat-label>
+                        <mat-date-range-input [rangePicker]="picker">
+                            <input matStartDate placeholder="From date" [formControl]="startDate">
+                            <input matEndDate placeholder="To date" [formControl]="endDate">
+                        </mat-date-range-input>
+                        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+                    </mat-form-field>
+                </div>
+                <div fxFlex="50">
+                    <button mat-flat-button class="btn-primary height-40 margin-left-10" matTooltip="View" (click)="getAllOrders()" style="background-color: rgb(206, 181, 67);margin-left: 5px;">View</button>
+                    <button mat-flat-button class="btn-primary height-40 margin-left-10" matTooltip="Download Stock" (click)="downloadReport()" style="background-color: rgb(67, 206, 102);margin-left: 5px;">Download Report</button>
+                </div>
+            </div>
+            <div class="mat-elevation-z8 main-table-scroll">
+                <table mat-table [dataSource]="dataSource" matSort class="full-width">
+                    <ng-container matColumnDef="orderId">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;"> Order Id </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;">{{row.orderId}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="orderDate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 15% !important;width: 15% !important;"> Order Date </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 15% !important;width: 15% !important;">{{row.orderDate | date:'yyyy-MM-dd'}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="productName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;text-align: right;"> Product Name </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.productName}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="unitPrice">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;"> Unit Price </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;">{{row.unitPrice | number:'.2'}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="qty">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;"> Qty </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;">{{row.qty}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="discount">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;"> Discount </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;">{{row.discount | number:'.2'}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="subTotal">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;"> Sub Total </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;">{{row.subTotal | number:'.2'}}</td>
+                    </ng-container>
+
+
+
+                    <ng-container matColumnDef="customerName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;"> Customer Name </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.customerName}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="mobile">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 15% !important;width: 15% !important;"> Mobile </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 15% !important;width: 15% !important;"> {{row.mobile}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;text-align: right;"> Email </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.email}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="opaymentType">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;text-align: right;"> Payment Type </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.opaymentType}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dcity">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;text-align: right;"> Delivery City </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.dcity}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ostatus">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;text-align: right;"> Order Status </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.ostatus}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="opaymentStatus">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;text-align: right;"> Payment Status </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.opaymentStatus}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="bcity">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;text-align: right;"> Billing City </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.bcity}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="bmobile">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;text-align: right;"> Billing Mobile </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.bmobile}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dcompanyName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;text-align: right;"> Delivery Company Name </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.dcompanyName}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dcontactPerson">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;text-align: right;"> Delivery Contact Person </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.dcontactPerson}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="baddress">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;text-align: right;"> Billing Address </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.baddress}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dmobile">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;text-align: right;"> Delivery Mobile </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.dmobile}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="bcontactPerson">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;text-align: right;"> Billing Contact Person </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.bcontactPerson}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="bemail">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;text-align: right;"> Billing Email </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.bemail}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dphone">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;text-align: right;"> Delivery Phone </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.dphone}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="daddress">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;text-align: right;"> Delivery Address </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.daddress}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="demail">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;text-align: right;"> Delivery Email </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.demail}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="bphone">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;text-align: right;"> Billing Phone </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.bphone}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="bcompanyName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;text-align: right;"> Billing Company </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;"> {{row.bcompanyName}}</td>
+                    </ng-container>
+
+
+
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                    </tr>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                    <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row" [ngClass]="{'red' : element.paymentStatus == 'CANCEL'}"></tr>
+                </table>
+            </div>
+            <mat-paginator [pageSizeOptions]="[6, 12, 30, 50, 100]" (page)="loadNextData();" #paginator></mat-paginator>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -1,0 +1,110 @@
+#fund-div {
+    height: 80vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fund-sub-div {
+    padding-right: 0px;
+    padding-left: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+    height: 100px;
+}
+
+mat-expansion-panel {
+    margin-top: 5px;
+}
+
+mat-accordion,
+mat-expansion-panel,
+mat-expansion-panel-header,
+mat-panel-title,
+mat-panel-description {
+    background-color: #F2F2F2 !important;
+    color: #5a5d5d !important;
+    font-weight: 400;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.td-width-20 {
+    width: 20px;
+}
+
+.matcard-color {
+    background-color: rgb(236, 231, 231);
+}
+
+:host ::ng-deep th {
+    background-color: #b6b6b6;
+    color: white;
+}
+
+:host ::ng-deep td {
+    background-color: #F2F2F2;
+    color: #5a5d5d;
+}
+
+table {
+    width: 100%;
+}
+
+tr.example-detail-row {
+    height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: rgb(184, 36, 36);
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+    background: #9c3636 !important;
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+}
+
+.example-element-detail {
+    overflow: hidden;
+    display: flex;
+}
+
+.example-element-diagram {
+    min-width: 80px;
+    padding: 8px;
+    font-weight: lighter;
+    margin: 8px 0;
+    height: auto;
+}
+
+.example-element-symbol {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: normal;
+}
+
+.example-element-description {
+    padding: 16px;
+}
+
+.example-element-description-attribution {
+    opacity: 0.5;
+}
+
+.td-40 {
+    width: 40%;
+    text-align: left;
+}
+
+.td-60 {
+    width: 60%;
+    text-align: left;
+}

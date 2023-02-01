@@ -1,0 +1,159 @@
+<div [hidden]="!loading" class="loader">
+    <h5>Loading...</h5>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+
+<div class="content-container" [ngClass]="{'disabled': loading == true}">
+    <mat-card class="main-card width-97">
+        <mat-card-header>
+            <mat-card-title>PRODUCT</mat-card-title>
+            <mat-card-subtitle>All Product</mat-card-subtitle>
+            <span class="spacer"></span>
+            <button class="btn-search" mat-mini-fab matTooltip="Search" (click)="search()">
+                <mat-icon>search</mat-icon>
+              </button>
+            <button mat-flat-button class="btn-primary height-40" routerLink="save-product" matTooltip="Add New Product">New
+                Product</button>
+            <button mat-flat-button class="btn-primary height-40 margin-left-10" matTooltip="Stock Update" (click)="stockuploadalert()" style="background-color: rgb(206, 185, 67);margin-left: 5px;">Stock Update</button>
+            <button mat-flat-button class="btn-primary height-40 margin-left-10" matTooltip="Download Stock" (click)="downloadstock()" style="background-color: rgb(67, 206, 102);margin-left: 5px;">Download Stock</button>
+        </mat-card-header>
+        <mat-card-content>
+            <div [hidden]="showSearch">
+                <mat-form-field appearance="standard">
+                    <mat-label>Search</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+                </mat-form-field>
+            </div>
+            <div class="mat-elevation-z8 main-table-scroll">
+                <table mat-table [dataSource]="dataSource" matSort class="full-width" multiTemplateDataRows>
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 20% !important;width: 20% !important;"> Product Name </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 20% !important;width: 20% !important;">{{row.name}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="qoh">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 5% !important;width: 5% !important;"> QOH </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 5% !important;width: 5% !important;">{{row.quantityOnHand}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="price">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 5% !important;width: 5% !important;"> Price </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 5% !important;width: 5% !important;">{{row.price | number: '2.'}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="description">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 10% !important;width: 10% !important;"> Description </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 10% !important;width: 10% !important;">{{row.description}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="displayOrder">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 5% !important;width: 5% !important;"> Display Order </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 5% !important;width: 5% !important;">{{row.displayOrder}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="brand">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 10% !important;width: 10% !important;"> Brand </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 10% !important;width: 10% !important;"> {{row.brand.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="category">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 15% !important;width: 15% !important;"> Categories </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 15% !important;width: 15% !important;"> <span *ngFor="let cat of row.categoryList; last as isLast">
+                            {{cat.name}} {{isLast?'':', '}}
+                        </span> </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 5% !important;width: 5% !important;text-align: right;" align="end"> Status </th>
+                        <td mat-cell *matCellDef="let row" style="flex: 0 0 5% !important;width: 5% !important;" align="end">
+                            <mat-slide-toggle color="warn" [checked]="row.status == 1" (change)="changeProductStatus(row,$event)">
+                            </mat-slide-toggle>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="edit">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 10% !important;width: 10% !important;" align="start"> </th>
+                        <td mat-cell *matCellDef="let row" class="text-align-right" style="flex: 0 0 10% !important;width: 10% !important;" align="start">
+                            <mat-icon color="accent" aria-hidden="false" matTooltip="Update" class="cursor-pointer" routerLink="save-product/{{row.id}}">edit</mat-icon>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="upload">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 10% !important;width: 10% !important;" align="start"> </th>
+                        <td mat-cell *matCellDef="let row" class="text-align-right" style="flex: 0 0 10% !important;width: 10% !important;" align="start">
+                            <input type="file" (change)="uploadFile($event,row.id)">
+                        </td>
+                    </ng-container>
+
+                    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                    <ng-container matColumnDef="expandedDetail">
+                        <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                <div class="full-width example-element-diagram">
+                                    <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                                        <table style="width: 100%;">
+                                            <tr>
+                                                <th>
+                                                    Discount Enabled
+                                                </th>
+                                                <th>
+                                                    : {{element.discountStatus == 1 ? 'Yes':'No'}}
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    Discount Type
+                                                </th>
+                                                <th>
+                                                    : {{element.discountType}}
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    Discount Value
+                                                </th>
+                                                <th>
+                                                    : {{element.discountAmount}}
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div fxLayout="row" fxLayout.sm="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="right">
+                                        <div fxFlex="50" class="padding-right-5">
+                                            <div style="overflow: auto;max-width: 500px">
+                                                <span *ngFor="let slide of element.imageList; let i = index">
+                                                    <img src="{{slide.imagePathPrefix}}3x/{{slide.imageString}}" style="height: 300px;width: 300px;border: 1px solid black;margin: 5px;">
+                                                </span>
+
+                                            </div>
+                                        </div>
+                                        <mat-divider [vertical]="true" class="margin-10"></mat-divider>
+                                        <div fxFlex="50" class="padding-left-5">
+                                            <div class="center padding-bottom-5" style="color: rgb(65, 63, 63);font-weight: 500;">
+                                                <mat-icon>filter_list</mat-icon> Filters</div>
+
+                                            <mat-chip-list class="mat-chip-list center" aria-label="Color selection">
+                                                <mat-chip *ngFor="let chip of element.filterData" selected color="accent" style="max-width: 300px;">
+                                                    {{chip.name}} : {{chip.filter == null || chip.filter == undefined || chip.filter == 0 ? chip.dataStr : chip.dataDece != null ? chip.dataDece : chip.dataInt != null ? chip.dataInt: ''}}
+                                                </mat-chip>
+                                            </mat-chip-list>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                    </tr>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                    <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row" [class.example-expanded-row]="expandedElement === element" (click)="expandedElement = expandedElement === element ? null : element"></tr>
+                    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                </table>
+            </div>
+            <mat-paginator [pageSizeOptions]="[50, 250, 500, 1000, 2000]" (page)="loadNextData();"></mat-paginator>
+        </mat-card-content>
+    </mat-card>
+</div>
