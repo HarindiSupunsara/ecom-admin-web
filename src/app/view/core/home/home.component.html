@@ -1,8 +1,8 @@
 <mat-toolbar class="header">
-    <span (click)="drawer.toggle()"><img src="assets/images/logo.jpg" alt="" srcset="" class="width-180 height-160 margin-top-15"></span>
+    <span (click)="drawer.toggle()"><img src="assets/images/int%202.png" alt="" srcset="" class="width-180 height-160 margin-top-15"></span>
     <span class="spacer"></span>
     <button mat-icon-button [matMenuTriggerFor]="menu" class="example-icon">
-        <mat-icon>account_circle</mat-icon> 
+        <mat-icon>account_circle</mat-icon>
     </button>{{sessionStorage.getItem("name") != 'undefined' ? sessionStorage.getItem("name") : ''}}
     <mat-menu #menu="matMenu" class="mat-menu">
         <button mat-menu-item (click)="alertChangePw()"><mat-icon class="matMenuIcon">lock</mat-icon>Change Password</button>
